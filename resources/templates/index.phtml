@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="<?php echo asset('/css/app.css'); ?>">
+
+	<title>Žinutės</title>
+</head>
+<body>
+	<div id="wrapper">
+            <h1>Jūsų žinutės</h1>
+            <div id="div-comment-container">
+                <p class="err">
+                    <label for="fullname">Vardas, pavardė *</label><br/>
+                    <input type="text" name="fullname" value="" />
+                </p>
+                <p>
+                    <label for="birthdate">Gimimo data *</label><br/>
+                    <input type="text" name="birthdate" value="" />
+                </p>
+                <p>
+                    <label for="email">El.pašto adresas</label><br/>
+                    <input type="text" name="email" value="" />
+                </p>
+                <p class="err">
+                    <label for="message">Jūsų žinutė *</label><br/>
+                    <textarea></textarea>
+                </p>
+                <p>
+                    <span>* - privalomi laukai</span>
+                    
+                    <input type="submit" value="Skelbti" id="button-submit-comment">
+                    
+                    <img src="img/ajax-loader.gif" alt="" />
+                </p>
+            </div>
+            <ul>
+                <li>
+                    <strong>Šiuo metu žinučių nėra. Būk pirmas!</strong>
+                </li>
+                <li>
+                    <span>2010 01 01 08:59</span> <a href="mailto:example@example.com">Vardas Pavardė</a>, 13 m.<br/>
+                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
+                </li>
+                <li>
+                    <span>2010 01 01 08:59</span> Vardas Pavardė, 75 m. <br/>
+                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
+                </li>
+                <li>
+                    <span>2010 01 01 08:59</span> Vardas Pavardė, 10 m. <br/>
+                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
+                </li>
+                <li>
+                    <span>2010 01 01 08:59</span> <a href="mailto:example@example.com">Vardas Pavardė</a>, 25 m. <br/>
+                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
+                </li>
+                <li>
+                    <span>2010 01 01 08:59</span> Vardas Pavardė, 26 m. <br/>
+                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
+                </li>
+            </ul>
+            <p id="pages">
+                <a href="#" title="atgal">atgal</a>
+                <a href="#" title="1">1</a>
+                2
+                <a href="#" title="3">3</a>
+                <a href="#" title="4">4</a>
+                <a href="#" title="toliau">toliau</a>
+            </p>
+        </div>
+	<script src="<?php echo asset('/js/app.js'); ?>"></script>
+</body>
+</html>
