@@ -11,67 +11,56 @@
 </head>
 <body>
 	<div id="wrapper">
-            <h1>Jūsų žinutės</h1>
-            <div id="div-comment-container">
-                <p>
-                    <label for="fullname">Vardas, pavardė *</label><br/>
-                    <input type="text" name="fullname" />
-                </p>
-                <p>
-                    <label for="birthdate">Gimimo data *</label><br/>
-                    <!-- Galima butu panaudoti type="date", bet po to reiktu formatuoti daug...  -->
-                    <input type="text" name="birthdate" placeholder="1992-02-04" />
-                </p>
-                <p>
-                    <label for="email">El.pašto adresas</label><br/>
-                    <input type="email" name="email" />
-                </p>
-                <p>
-                    <label for="message">Jūsų žinutė *</label><br/>
-                    <textarea name="message"></textarea>
-                </p>
-                <p>
-                    <span>* - privalomi laukai</span>
-                    
-                    <input type="submit" value="Skelbti" id="button-submit-comment">
-                    
-                    <img src="img/ajax-loader.gif" style="display: none;">
-                </p>
-            </div>
-            <ul id="ul-comments-list">
-                <li>
-                    <strong>Šiuo metu žinučių nėra. Būk pirmas!</strong>
-                </li>
-                <li>
-                    <span>2010 01 01 08:59</span> <a href="mailto:example@example.com">Vardas Pavardė</a>, 13 m.<br/>
-                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
-                </li>
-                <li>
-                    <span>2010 01 01 08:59</span> Vardas Pavardė, 75 m. <br/>
-                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
-                </li>
-                <li>
-                    <span>2010 01 01 08:59</span> Vardas Pavardė, 10 m. <br/>
-                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
-                </li>
-                <li>
-                    <span>2010 01 01 08:59</span> <a href="mailto:example@example.com">Vardas Pavardė</a>, 25 m. <br/>
-                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
-                </li>
-                <li>
-                    <span>2010 01 01 08:59</span> Vardas Pavardė, 26 m. <br/>
-                    Įkėlėme šeimos dienos akciją. Dėl papildomos medžiagos užtrukome šiek tiek ilgiau nei įprasta.
-                </li>
-            </ul>
-            <p id="pages">
-                <a href="#" title="atgal">atgal</a>
-                <a href="#" title="1">1</a>
-                2
-                <a href="#" title="3">3</a>
-                <a href="#" title="4">4</a>
-                <a href="#" title="toliau">toliau</a>
-            </p>
-        </div>
+		<h1>Jūsų žinutės</h1>
+		<div id="div-comment-container">
+			<p>
+				<label for="fullname">Vardas, pavardė *</label><br/>
+				<input type="text" name="fullname" />
+			</p>
+			<p>
+				<label for="birthdate">Gimimo data *</label><br/>
+				<!-- Galima butu panaudoti type="date", bet po to reiktu formatuoti daug...  -->
+				<input type="text" name="birthdate" placeholder="1992-02-04" />
+			</p>
+			<p>
+				<label for="email">El.pašto adresas</label><br/>
+				<input type="email" name="email" />
+			</p>
+			<p>
+				<label for="message">Jūsų žinutė *</label><br/>
+				<textarea name="message"></textarea>
+			</p>
+			<p>
+				<span>* - privalomi laukai</span>
+				
+				<input type="submit" value="Skelbti" id="button-submit-comment">
+				
+				<img src="img/ajax-loader.gif" style="display: none;">
+			</p>
+		</div>
+		<ul id="ul-comments-list">
+			<li>
+				<strong>Šiuo metu žinučių nėra. Būk pirmas!</strong>
+			</li>
+			<?php foreach($messages as $message): ?>
+			<li>
+				<span><?php echo date('Y-m-d H:i', strtotime($message->created_at)); ?></span> <?php echo $message->email ? sprintf('<a href="mailto:%s">%s</a>', $message->email, $message->fullname) : $message->fullname ?>, <?php date('Y') - date('Y', strtotime($message->birthdate)) ?> m.<br/>
+				<?php echo $message->message ?>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+		<p id="pages">
+			<a href="#" title="atgal">atgal</a>
+			<a href="#" title="1">1</a>
+			2
+			<a href="#" title="3">3</a>
+			<a href="#" title="4">4</a>
+			<a href="#" title="toliau">toliau</a>
+		</p>
+	</div>
+	<script>
+		var _PER_PAGE = <?php echo $per_page; ?>;
+	</script>
 	<script src="<?php echo asset('/js/app.js'); ?>"></script>
 </body>
 </html>

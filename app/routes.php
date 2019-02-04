@@ -1,8 +1,11 @@
 <?php
 
 $app->get('/', function($request, $response, $args) {
+	$per_page = $this->get('per_page');
 
-	return $this->renderer->render($response, 'index.phtml', $args);
+	$messages = NoNameZ\DB::getInstance()->query('SELECT * FROM `messages` LIMIT ' . $per_page)->fetchAll(PDO::FETCH_CLASS);
+
+	return $this->renderer->render($response, 'index.phtml', compact('per_page', 'messages'));
 })->setName('index');
 
 $app->post('/comments/submit', function($request, $response) {
@@ -26,7 +29,7 @@ $app->post('/comments/submit', function($request, $response) {
 		return $value;
 	}, $data);
 
-	if (preg_match('/^\w{3,30}\s\w{3,30}$/', $data['fullname']) == 0) {
+	if (preg_match('/^[a-zA-ZĄČĘĖĮŠŲŪąčęėįšųū]{3,30}\s[a-zA-ZĄČĘĖĮŠŲŪąčęėįšųū]{3,30}$/u', $data['fullname']) == 0) {
 		return $response->withStatus(422)->withJson(['fullname']);
 	}
 
