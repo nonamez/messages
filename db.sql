@@ -1,0 +1,10 @@
+CREATE TABLE `messages` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`fullname` VARCHAR(150) NOT NULL,
+	`birthdate` DATE NOT NULL,
+	`email` VARCHAR(50) NULL DEFAULT NULL,
+	`message` TEXT NOT NULL,
+	PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+;

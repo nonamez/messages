@@ -18,6 +18,14 @@ $app->post('/comments/submit', function($request, $response) {
  		return $response->withStatus(422)->withJson($required);
 	}
 
+	// Nuo visu XSS neissaugos, bet manau bendram supratimui uzteks...
+	$data = array_map(function($value) {
+		$value = strip_tags($value);
+		$value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+		return $value;
+	}, $data);
+
 	if (preg_match('/^\w{3,30}\s\w{3,30}$/', $data['fullname']) == 0) {
 		return $response->withStatus(422)->withJson(['fullname']);
 	}
@@ -32,6 +40,9 @@ $app->post('/comments/submit', function($request, $response) {
 		return $response->withStatus(422)->withJson(['email']);
 	}
 
+	$data['created_at'] = date('Y-m-d H:i:s');
+
+	$data['message_id'] = NoNameZ\DB::getInstance()->insert('messages', $data);
 	
-	dd($request->getParams());
+	return $response->withJson($data);
 });
