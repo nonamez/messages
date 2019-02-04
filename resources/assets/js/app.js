@@ -5,7 +5,10 @@ jQuery(document).ready(function() {
 
 	jQuery('#button-submit-comment').click(function() {
 		div_comment_container.find('> p.err').removeClass('err');
-		
+
+		div_comment_container.find('input,textarea').prop('disabled', true);
+		div_comment_container.find('img').show();
+
 		let data = div_comment_container.find('[name]').serializeArray();
 
 		jQuery.post('/comments/submit', data, function(response) {
@@ -16,6 +19,9 @@ jQuery(document).ready(function() {
 					div_comment_container.find(`[name="${name}"]`).closest('p').addClass('err');
 				}
 			}
+		}).always(function() {
+			div_comment_container.find('input,textarea').prop('disabled', false);
+			div_comment_container.find('img').hide();
 		})
 	})
 })
