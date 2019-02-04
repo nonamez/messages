@@ -1,18 +1,35 @@
 window.$ = window.jQuery = require('jquery');
 
 jQuery(document).ready(function() {
-	let div_comment_container = jQuery('#div-comment-container');
+	let div_comment_container = jQuery('#div-comment-container'),
+		ul_comments_list      = jQuery('#ul-comments-list');
 
 	jQuery('#button-submit-comment').click(function() {
 		div_comment_container.find('> p.err').removeClass('err');
 
+		let data = div_comment_container.find('[name]').serializeArray();
+
 		div_comment_container.find('input,textarea').prop('disabled', true);
 		div_comment_container.find('img').show();
 
-		let data = div_comment_container.find('[name]').serializeArray();
-
 		jQuery.post('/comments/submit', data, function(response) {
-			console.log(response)
+			ul_comments_list.find('li:last').remove();
+
+			let container = jQuery('<li/>').prependTo(ul_comments_list);
+
+			jQuery('<span/>').text(response.created_at).appendTo(container);
+
+			if (response.email) {
+				jQuery('<a/>').attr('href', 'mailto:' + response.email).text(response.fullname).appendTo(container);
+			} else {
+				container.append(response.fullname);
+			}
+
+			container.append(`, ${response.birthdate} m.`);
+
+			jQuery('<br/>').appendTo(container);
+
+			container.append(response.message);
 		}).fail(function(response) {
 			if (response.status == 422) {
 				for (let name of response.responseJSON) {

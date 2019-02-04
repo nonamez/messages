@@ -30,9 +30,11 @@ $app->post('/comments/submit', function($request, $response) {
 		return $response->withStatus(422)->withJson(['fullname']);
 	}
 
+	$data['fullname'] = ucwords($data['fullname']);
+
 	$birthdate = strtotime($data['birthdate']);
 
-	if ($birthdate == FALSE || $birthdate > time()) {
+	if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $data['birthdate']) == 0 || $birthdate > time()) {
 		return $response->withStatus(422)->withJson(['birthdate']);
 	}
 
@@ -43,6 +45,8 @@ $app->post('/comments/submit', function($request, $response) {
 	$data['created_at'] = date('Y-m-d H:i:s');
 
 	$data['message_id'] = NoNameZ\DB::getInstance()->insert('messages', $data);
-	
+
+	$data['birthdate'] = date('Y') - date('Y', $birthdate);
+
 	return $response->withJson($data);
 });

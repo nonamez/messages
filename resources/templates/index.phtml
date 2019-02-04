@@ -15,15 +15,16 @@
             <div id="div-comment-container">
                 <p>
                     <label for="fullname">Vardas, pavardė *</label><br/>
-                    <input type="text" name="fullname" value="" />
+                    <input type="text" name="fullname" />
                 </p>
                 <p>
                     <label for="birthdate">Gimimo data *</label><br/>
-                    <input type="text" name="birthdate" value="" />
+                    <!-- Galima butu panaudoti type="date", bet po to reiktu formatuoti daug...  -->
+                    <input type="text" name="birthdate" placeholder="1992-02-04" />
                 </p>
                 <p>
                     <label for="email">El.pašto adresas</label><br/>
-                    <input type="text" name="email" value="" />
+                    <input type="email" name="email" />
                 </p>
                 <p>
                     <label for="message">Jūsų žinutė *</label><br/>
@@ -37,7 +38,7 @@
                     <img src="img/ajax-loader.gif" style="display: none;">
                 </p>
             </div>
-            <ul>
+            <ul id="ul-comments-list">
                 <li>
                     <strong>Šiuo metu žinučių nėra. Būk pirmas!</strong>
                 </li>
