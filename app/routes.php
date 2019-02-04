@@ -3,8 +3,29 @@
 $app->get('/', function($request, $response, $args) {
 	$per_page = $this->get('per_page');
 
-	$messages = NoNameZ\DB::getInstance()->query('SELECT * FROM `messages` LIMIT ' . $per_page)->fetchAll(PDO::FETCH_CLASS);
+	$total = NoNameZ\DB::getInstance()->query('SELECT COUNT(*) FROM `messages`')->fetchColumn();
 
+	$pages = ceil($total / $per_page);
+
+	$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, [
+		'options' => array(
+			'default'   => 1,
+			'min_range' => 1,
+			'max_range' => $pages
+		),
+	]);
+
+	$offset = ($page - 1) * $per_page;
+
+	$stmt =  NoNameZ\DB::getInstance()->prepare('SELECT * FROM `messages` ORDER BY `id` DESC LIMIT :limit OFFSET :offset');
+
+	$stmt->bindParam(':limit', $per_page, PDO::PARAM_INT);
+	$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+	$stmt->execute();
+
+	$messages = $stmt->fetchAll(PDO::FETCH_CLASS);
+ 
 	return $this->renderer->render($response, 'index.phtml', compact('per_page', 'messages'));
 })->setName('index');
 
@@ -18,7 +39,7 @@ $app->post('/comments/submit', function($request, $response) {
 	$required = array_keys(array_diff_key($_REQUIRED, $data));
 
 	if (count($required) > 0) {
- 		return $response->withStatus(422)->withJson($required);
+		return $response->withStatus(422)->withJson($required);
 	}
 
 	// Nuo visu XSS neissaugos, bet manau bendram supratimui uzteks...

@@ -39,15 +39,18 @@
 			</p>
 		</div>
 		<ul id="ul-comments-list">
+			<?php if (count($messages) == 0): ?>
 			<li>
 				<strong>Šiuo metu žinučių nėra. Būk pirmas!</strong>
 			</li>
+			<?php else: ?>
 			<?php foreach($messages as $message): ?>
 			<li>
 				<span><?php echo date('Y-m-d H:i', strtotime($message->created_at)); ?></span> <?php echo $message->email ? sprintf('<a href="mailto:%s">%s</a>', $message->email, $message->fullname) : $message->fullname ?>, <?php date('Y') - date('Y', strtotime($message->birthdate)) ?> m.<br/>
 				<?php echo $message->message ?>
 			</li>
 			<?php endforeach; ?>
+			<?php endif; ?>
 		</ul>
 		<p id="pages">
 			<a href="#" title="atgal">atgal</a>
