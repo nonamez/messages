@@ -17,6 +17,8 @@ jQuery(document).ready(function() {
 		div_comment_container.find('img').show();
 
 		jQuery.post('/comments/submit', data, function(response) {
+			div_comment_container[0].reset();
+			
 			if (ul_comments_list.find('li').length >= _PER_PAGE) {
 				ul_comments_list.find('li:last').remove();
 			}
