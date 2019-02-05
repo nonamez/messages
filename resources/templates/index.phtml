@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,7 +11,7 @@
 <body>
 	<div id="wrapper">
 		<h1>Jūsų žinutės</h1>
-		<div id="div-comment-container">
+		<form id="div-comment-container" method="POST">
 			<p>
 				<label for="fullname">Vardas, pavardė *</label><br/>
 				<input type="text" name="fullname" />
@@ -37,7 +36,7 @@
 				
 				<img src="img/ajax-loader.gif" style="display: none;">
 			</p>
-		</div>
+		</form>
 		<ul id="ul-comments-list">
 			<?php if (count($messages) == 0): ?>
 			<li>
@@ -53,12 +52,13 @@
 			<?php endif; ?>
 		</ul>
 		<p id="pages">
-			<a href="#" title="atgal">atgal</a>
-			<a href="#" title="1">1</a>
-			2
-			<a href="#" title="3">3</a>
-			<a href="#" title="4">4</a>
-			<a href="#" title="toliau">toliau</a>
+			<?php if ($page > 1): ?>
+			<a href="?page=<?php echo $page - 1 ?>" title="atgal">atgal</a>
+			<?php endif;?>
+			<?php echo $page; ?>
+			<?php if ($page < $pages): ?>
+			<a href="?page=<?php echo $page + 1 ?>" title="toliau">toliau</a>
+			<?php endif;?>
 		</p>
 	</div>
 	<script>

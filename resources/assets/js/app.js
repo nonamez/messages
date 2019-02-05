@@ -4,12 +4,15 @@ jQuery(document).ready(function() {
 	let div_comment_container = jQuery('#div-comment-container'),
 		ul_comments_list      = jQuery('#ul-comments-list');
 
-	jQuery('#button-submit-comment').click(function() {
+	jQuery('#button-submit-comment').click(function(event) {
+		// Preventing default form action. In case of JS off after submit site will just reload
+		event.preventDefault();
+
 		div_comment_container.find('> p.err').removeClass('err');
 
 		let data = div_comment_container.find('[name]').serializeArray();
 
-		// ajaxStart
+		// may be moved to ajaxStart
 		div_comment_container.find('input,textarea').prop('disabled', true);
 		div_comment_container.find('img').show();
 
@@ -34,14 +37,14 @@ jQuery(document).ready(function() {
 
 			container.append(response.message);
 		}).fail(function(response) {
-			// ajaxError
+			// may be moved to ajaxError
 			if (response.status == 422) {
 				for (let name of response.responseJSON) {
 					div_comment_container.find(`[name="${name}"]`).closest('p').addClass('err');
 				}
 			}
 		}).always(function() {
-			// ajaxStop
+			// may be moved to ajaxStop
 			div_comment_container.find('input,textarea').prop('disabled', false);
 			div_comment_container.find('img').hide();
 		})
